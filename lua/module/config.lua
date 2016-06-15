@@ -6,8 +6,8 @@
 
 local json   = require "lua.resty.dkjson"
 local common = require "lua.module.common"
-local redis  = require "lua.module.redis"
-local red    = redis:new()
+-- local redis  = require "lua.module.redis"
+-- local red    = redis:new()
 
 
 local _M = {}
