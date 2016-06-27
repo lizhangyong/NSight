@@ -317,6 +317,9 @@ function _M.report()
     -- Version of the provided data set. The current version is 1
     -- report.version = 1 
 
+    ngx.header.content_type = "application/json"
+    ngx.header.charset = "utf-8"
+
     report = get_nginx_info(report)
     report.connections = get_connections_info() or {}
     report.requests = get_requests_info() or {}
