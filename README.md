@@ -1,6 +1,6 @@
 #NSight
 
-NSight是一个可以用来监控 Ngixn 运行状态，控制访问权限的开源项目。
+NSight是一个用于监控 Ngixn 运行状态，控制访问权限的开源项目。
 
  
 #描述
@@ -21,6 +21,107 @@ Nginx 通常被用作反向代理服务器或者 Web 服务器，其负载和稳
 
 /status 返回结果如下：
 
-![sample1](./sample1.png)
+    {
+		"generation":1,
 
-![sample2](./sample2.png)
+		"requests":{"current":0,"total":0,"success":0},
+
+		"worker_count":2,
+
+		"address":"127.0.0.1:80",
+
+	"nginx_version":"1.9.7",
+
+	"server_zones":{        # web 的状态
+
+		"localhost":{
+
+			"processing":0,
+
+			"requests":2, 
+
+			"discarded":0,
+
+			"sent":1201,
+
+			"received":708,
+
+			"responses":{   # 请求的返回统计 
+
+			"3xx":0,
+
+			"4xx":1,
+
+			"5xx":0,
+
+			"1xx":0,
+
+			"2xx":1
+
+			}
+
+		}
+
+	},
+
+	"timestamp":1467012689,
+
+	"connections":{"active":1,"writing":1,"current":2,"idle":1,"reading":0},
+
+	"upstreams":{           # 上游的状态
+
+		"upstream_1":{
+
+			"peers":[
+
+				{
+
+				"weight":1,  # 设置权重
+
+				"id":0,
+
+				"conns":0,
+
+				"received":0,
+
+				"fails":0,
+
+				"current_weight":0,   # 当前的权重
+
+				"effective_weight":1,
+
+				"responses":[  # 上游状态返回统计
+
+					"3xx":0,
+
+					"4xx":1,
+
+					"5xx":0,
+
+					"1xx":0,
+
+					"2xx":100
+
+				],
+
+				"requests":101,  #请求数
+
+				"backup":false,  #是否是备用结点 
+
+				"fail_timeout":10,
+
+				"sent":0,
+
+				"name":"10.16.10.12:82",
+
+				"max_fails":1
+
+				}
+
+			]
+
+		}
+
+	}
+	
+}
