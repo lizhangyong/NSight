@@ -1,6 +1,6 @@
 #NSight
 
-NSight是一个可以用来监控 Ngixn 运行状态，控制访问权限的开源项目。
+NSight是一个可以用来监控 Nginx 运行状态，控制访问权限的开源项目。
 
  
 #描述
@@ -24,3 +24,6 @@ Nginx 通常被用作反向代理服务器或者 Web 服务器，其负载和稳
 ![sample1](./sample1.png)
 
 ![sample2](./sample2.png)
+
+
+本项目只在单个 nginx 服务器上提供状态查询，请求统计，以及访问规则控制的接口，并不提供 UI 界面，如果需要 UI 来对多 Nginx 服务器集群进行管理请关注项目 [NSight-Console](https://github.com/aifeiasdf/NSight-Console)
