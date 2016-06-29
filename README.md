@@ -8,7 +8,7 @@ Nginx 通常被用作反向代理服务器或者 Web 服务器，其负载和稳
 
 #安装部署
 
-1.需要将 [lua_nginx_module](https://github.com/openresty/lua-nginx-module) 和 [ngx_http_stub_status_module](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) 这两个模块编译到 Nginx 中，由于过程比较复杂，建议直接安装和编译 [OpenResty](http://openresty.org/en/) 这个项目，
+1.需要将 [lua_nginx_module](https://github.com/openresty/lua-nginx-module) 和 [ngx_http_stub_status_module](http://nginx.org/en/docs/http/ngx_http_stub_status_module.html) 这两个模块编译到 Nginx 中，由于过程比较复杂，建议直接安装和编译 [OpenResty](http://openresty.org/en/) 这个项目，如果你编译的是OpenResty，在 configure 时还是需要带上 "--with-http_stub_status_module" 这个参数
 
 2.将 NSight 中的 lua 文件夹拷贝到 conf 同级目录，将 conf/NSight.conf 拷贝到 conf 目录下，并在 nginx.conf 中 http 域添加 "include nsight.conf;"
 
