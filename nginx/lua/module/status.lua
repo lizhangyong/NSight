@@ -40,6 +40,9 @@ local KEY_UPSTREAM_SUC_CNT = "upstream_success_cnt"
 local KEY_UPSTREAM_REP_LEN = "upstream_rep_len"
 local KEY_UPSTREAM_REP_TIME= "upstream_rep_time"
 
+local KEY_HTTP_PROCESSING = "http_processing_"
+local KEY_HTTP_PROCESSING_EXPIRE = 1
+
 -- maybe optimized, read from redis
 function _M.init()
 
@@ -104,11 +107,21 @@ local function server_statistics_responses( key, zone, status, notify_call)
     local lock = lock:new("locks")
     local shared_status = ngx.shared.status
     local elapsed, err = lock:lock("_lock_" .. key)
-    local json_zone = common.json_decode(shared_status:get(key)) or {}
 
+    --count http requests per second
+    local http_processing_count = shared_status:get(KEY_HTTP_PROCESSING .. zone)
+    if not http_processing_count then
+        shared_status:set( KEY_HTTP_PROCESSING .. zone, 1, KEY_HTTP_PROCESSING_EXPIRE)
+    else
+        shared_status:incr( KEY_HTTP_PROCESSING .. zone, 1 )
+    end
+
+    http_processing_count = ( http_processing_count or 0 ) + 1
+
+    local json_zone = common.json_decode(shared_status:get(key)) or {}
     if nil == json_zone[zone] then
         json_zone[zone] = {
-            processing = 0;
+            processing = http_processing_count;
             requests   = 1,
             responses  = calculate_responses(nil, tonumber(status)),
             discarded  = 0,
@@ -119,7 +132,7 @@ local function server_statistics_responses( key, zone, status, notify_call)
         -- ngx.log(ngx.DEBUG, common.json_encode(json_server_zone))
         local t = json_zone[zone]
         json_zone[zone] = {
-            processing = 0,
+            processing = http_processing_count,
             requests   = t.requests + 1,
             responses  = calculate_responses(t.responses, tonumber(status)),
             discarded  = 0,
